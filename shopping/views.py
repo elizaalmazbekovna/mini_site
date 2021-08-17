@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,FileResponse
 from .models import Product
 from django.conf import settings
+from shopping.forms import ProductForm
 # Create your views here.
 
 def say_hello(request):
@@ -41,3 +42,9 @@ def image_view(request):
     file = open(path,'rb')
     return FileResponse(file)
 
+
+def add_product(request):
+    data={
+        'form': ProductForm
+    }
+    return render(request,'add.html',context=data)
