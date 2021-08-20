@@ -2,9 +2,22 @@
 {% block content %}
 
     <h1> Добавление товара </h1>
-    <form action="/add_product" method="post">
+    <form action="/add_product/" method="post">
+    #сайт аркылуу кошулган товарды сактоо
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Добавить">
+        #товар тизмесин аталышын жок чыгаруу
+        {{ form.title }}
+        <br>
+        {{ form.description }}
+        <br>
+        {{ form.price }}
+        <br>
+        {{ form.discount }}
+        <br>
+        {{ form.category }}
+        <br>
+        {{ form.tags }}
+        <br>
+        <input class="btn btn-dark" type="submit" value="Добавить">
     </form>
 {% endblock %}

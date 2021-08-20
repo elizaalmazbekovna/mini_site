@@ -1,5 +1,7 @@
 from datetime import datetime
-from django.shortcuts import render
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.http import HttpResponse,FileResponse
 from .models import Product
 from django.conf import settings
@@ -42,9 +44,39 @@ def image_view(request):
     file = open(path,'rb')
     return FileResponse(file)
 
-
+@login_required(login_url='/login/')
 def add_product(request):
-    data={
-        'form': ProductForm
+    #товарды кошуу жана сактоо
+    if request.method=='GET':
+        data = {
+            'form': ProductForm
+        }
+        return render(request,'add.html',context=data)
+    elif request.method=='POST':
+        form = ProductForm(data=request.POST)
+        print(form)
+
+        if form.is_valid():
+            form.save()
+            return redirect ( '/' )
+
+from django.contrib import auth
+def logout(request):
+
+    auth.logout(request)
+    return redirect('/login/')
+from .forms import LoginForm
+
+def login(request):
+    if request.method=='POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username,password=password)
+        if user is not None:
+            auth.login(request,user)
+            return redirect('/')
+    data = {
+        'form': LoginForm
     }
-    return render(request,'add.html',context=data)
+
+    return render(request,'login.html',context=data)

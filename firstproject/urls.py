@@ -20,12 +20,14 @@ from django.urls import path
 from shopping import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hello/', views.say_hello),
-    path('date/', views.saw_date),
-    path('', views.main_page),
-    path('image/', views.image_view),
-    path('add_product/', views.add_product),
-    path('products/<int:product_id>/', views.product_item_view)
+    path ( 'admin/', admin.site.urls ),
+    path ( 'hello/', views.say_hello ),
+    path ( 'date/', views.saw_date ),
+    path ( '', views.main_page ),
+    path ( 'image/', views.image_view ),
+    path ( 'add_product/', views.add_product ),
+    path ( 'logout/', views.logout ),
+    path('login/', views.login),
+    path ( 'products/<int:product_id>/', views.product_item_view )
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
